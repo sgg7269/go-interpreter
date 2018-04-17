@@ -1,0 +1,11 @@
+program : stmt; 
+
+stmt : expr <EOS>;
+
+expr : equals_expr;
+
+equals_expr: var = term;
+
+var  : type ident;
+
+term : constant;
