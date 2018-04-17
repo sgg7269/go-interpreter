@@ -1,11 +1,57 @@
-program : stmt; 
+program : stmt+ ; 
 
-stmt : expr <EOS>;
+stmt    : expr <EOS> ;
 
-expr : equals_expr;
+expr    : term sec_op expr |
+          term             ;
 
-equals_expr: var = term;
+sec_op  : ADD     |
+          VEC_ADD |
+          SUB     |
+          VEC_SUB ;
 
-var  : type ident;
+ADD     : "+"  ;
+VEC_ADD : ".+" ;
+SUB     : "-"  ;
+VEC_SUB : ".-" ;
 
-term : constant;
+term    : factor pri_op term |
+          factor             ;
+
+pri_op  : MULT     |
+          DIV      |
+          VEC_MULT |
+          VEC_DIV  |
+          MOD      ;
+
+MULT      : "*"  ;
+DIV       : "/"  ;
+VEC_MULT  : ".*" ;
+VEC_DIV   : "./" ;
+MOD       : "%"  ;
+VEC_MOD   : ".%" ;
+
+factor  : L_PAREN expr R_PAREN |
+          <literal>            |
+          var                  ;
+
+L_PAREN : "(" ;
+R_PAREN : ")" ;
+
+var     : type ident ;
+
+type    : "var"  |
+          number |
+          char   |
+          string |
+          array  |
+          bool   ;
+
+ident   : <identifier> ;
+
+(* number  : int       |
+          float     |
+          binary    |
+          hex       |
+          complex   |
+          fraction  ; *)
