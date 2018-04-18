@@ -20,11 +20,9 @@ func (p *Program) GetSeparator() (bool, error) {
 				// p.AddToken(t)
 				p.Char.Accumulator = ""
 				return false, nil
-			} else {
-				return false, errors.New("not a separator")
 			}
-		} else {
-			return true, nil
+			return false, errors.New("not a separator")
 		}
+		return true, nil
 	}
 }

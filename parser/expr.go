@@ -100,10 +100,10 @@ func (p *Program) GetSecOp() (string, error) {
 					p.AddToken(secOpToken)
 					p.Char.Accumulator = ""
 					return secOpToken.Value.String, nil
-				} else {
-					fmt.Println("wtf")
-					return "", errors.New("wtf")
 				}
+
+				fmt.Println("wtf")
+				return "", errors.New("wtf")
 			}
 		}
 	}
