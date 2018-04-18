@@ -1,0 +1,6 @@
+TODO:
+FIXME:
+
+We should make a general "GetNextToken()" function that will get the next token
+Use a switch statement that is based on the last token and the current token to determine 
+the next expected token and error/try-again if we don't get that

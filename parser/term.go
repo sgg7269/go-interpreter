@@ -2,5 +2,6 @@ package parser
 
 // GetTerm ...
 func (p *Program) GetTerm() {
-	p.GetConstant()
+	// p.GetConstant()
+	p.GetFactor()
 }

@@ -32,7 +32,7 @@ MOD       : "%"  ;
 VEC_MOD   : ".%" ;
 
 factor  : L_PAREN expr R_PAREN |
-          <literal>            |
+          < literal >          |
           var                  ;
 
 L_PAREN : "(" ;
@@ -49,9 +49,23 @@ type    : "var"  |
 
 ident   : <identifier> ;
 
-(* number  : int       |
-          float     |
-          binary    |
-          hex       |
-          complex   |
-          fraction  ; *)
+(* 
+  we need to make something for series/formulas
+*)
+
+number  : binary   |
+          octal    |
+          hex      |
+          int      |
+          float    |
+          fraction |
+          radical  |
+          complex  ;
+
+binary  : [ "0" | "1" ]+ ;
+octal   : [ "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" ]+ ;
+hex     : [ "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 
+            "8" | "9" |"A" | "B" | "C" | "D" | "E" | "F" ]+ ;
+int     : [ "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ]+ ;
+float   : []
+

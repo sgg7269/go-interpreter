@@ -1,10 +1,14 @@
 package parser
 
-import "github.com/sgg7269/go-interpreter/token"
+import (
+	"errors"
+
+	"github.com/sgg7269/go-interpreter/token"
+)
 
 // GetSeparator ...
 // TODO: fix this
-func (p *Program) GetSeparator() {
+func (p *Program) GetSeparator() (bool, error) {
 	for {
 		if !p.EOF && !p.Char.EOS {
 			if p.Char.CurrentChar == SeparatorToken {
@@ -15,10 +19,12 @@ func (p *Program) GetSeparator() {
 				t.Type = "SEP"
 				// p.AddToken(t)
 				p.Char.Accumulator = ""
-				return
+				return false, nil
+			} else {
+				return false, errors.New("not a separator")
 			}
 		} else {
-			return
+			return true, nil
 		}
 	}
 }
