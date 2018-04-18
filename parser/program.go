@@ -1,6 +1,10 @@
 package parser
 
-import "github.com/sgg7269/go-interpreter/token"
+import (
+	"fmt"
+
+	"github.com/sgg7269/go-interpreter/token"
+)
 
 // Program is the Overarching program type that holds information about the current program parse
 type Program struct {
@@ -15,5 +19,6 @@ type Program struct {
 
 // GetProgram ...
 func (p *Program) GetProgram() {
-	p.GetStatement()
+	// p.GetStatement()
+	fmt.Println(p.GetNextToken())
 }

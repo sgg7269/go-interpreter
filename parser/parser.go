@@ -62,9 +62,23 @@ func (p *Program) GetNextChar() {
 	}
 }
 
+// // GetCurrentChar returns the character at the current index
+// func (p *Program) GetCurrentChar() (string, error) {
+// 	if p.Index < p.Length {
+// 		return string(p.Value[p.Index]), nil
+// 	}
+
+// 	// FIXME: maybe use this for EOF?
+// 	return "", errors.New("EOF")
+// }
+
 // GetCurrentChar returns the character at the current index
 func (p *Program) GetCurrentChar() string {
-	return string(p.Value[p.Index])
+	if p.Index < p.Length {
+		return string(p.Value[p.Index])
+	}
+
+	return ""
 }
 
 // GetCurrentIndex ...
@@ -85,4 +99,21 @@ func (p *Program) GetLastIndex() int {
 func (p *Program) AddToken(t token.Token) {
 	p.Tokens = append(p.Tokens, t)
 	return
+}
+
+// GetNextToken ...
+// FIXME: we can start out with going until space, but we will need something for strings after that
+func (p *Program) GetNextToken() token.Token {
+	for {
+		p.GetNextChar()
+		if !p.EOF && !p.Char.EOS {
+			if p.GetCurrentChar() == " " {
+				fmt.Println("token", p.Char.Accumulator)
+
+				// TODO: should actually return the token from a map lookup and switch on it to make sure its what were expecting
+				// FIXME: somewhere in the program struct should be a "expectedNextToken" struct, "lastToken" struct, etc
+				return token.Token{}
+			}
+		}
+	}
 }
