@@ -16,10 +16,20 @@ type (
 	}
 )
 
+// SetLocation ...
+func (t *Token) SetLocation(start, end int) {
+	t.SetStart(start)
+	t.SetEnd(end)
+}
+
+// SetStart ...
+func (t *Token) SetStart(index int) {
+	t.Location[0] = index
+}
+
 // SetEnd ...
 func (t *Token) SetEnd(index int) {
 	t.Location[1] = index
-	return
 }
 
 // NewToken ...

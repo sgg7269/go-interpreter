@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/sgg7269/go-interpreter/parser"
+	"github.com/sgg7269/go-interpreter/token"
 )
 
 func main() {
@@ -29,6 +30,11 @@ func main() {
 		Char: parser.Char{
 			CurrentChar: string(input[0]),
 		},
+		TokenPipeline: map[string]token.Token{
+			"last":     token.Token{},
+			"current":  token.Token{},
+			"expected": token.Token{},
+		},
 	}
 
 	fmt.Printf("Program start: %#v\n\n", p)
@@ -38,7 +44,7 @@ func main() {
 	fmt.Printf("Program end: %#v\n\n", p)
 
 	fmt.Println("Tokens:")
-	for _, token := range p.Tokens {
+	for _, token := range p.CollectedTokens {
 		fmt.Printf("Program end: %#v\n", token)
 	}
 }
