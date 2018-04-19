@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+
 	"github.com/sgg7269/go-interpreter/token"
 )
 
@@ -60,6 +62,14 @@ type Char struct {
 }
 
 // func LoadNextStatement() {}
+
+// PeekNextChar ...
+func (p *Program) PeekNextChar() string {
+	if p.Index+1 < p.Length {
+		return string(p.Value[p.Index+1])
+	}
+	return ""
+}
 
 // GetNextChar returns the next character in the sequence by incrementing the index and returning the "current" char
 func (p *Program) GetNextChar() {
@@ -135,16 +145,10 @@ func (p *Program) GetNextToken() token.Token {
 	start := p.GetCurrentIndex()
 
 	for {
-		p.GetNextChar()
 
-		switch {
-		case p.EOF:
-			t := tokenList["eof"]
-			t.SetLocation(start, p.GetCurrentIndex())
-			p.AddToken(t)
-			return t
-
-		case p.GetCurrentChar() == ";":
+		peek := p.PeekNextChar()
+		if p.PeekNextChar() == ";" {
+			p.GetNextChar()
 			// Parse the current accumulator
 			var t token.Token
 			if t, ok = tokenList[p.Char.Accumulator]; ok {
@@ -155,6 +159,31 @@ func (p *Program) GetNextToken() token.Token {
 				t.Value.String = p.Char.Accumulator
 			}
 			p.AddToken(t)
+			// p.Char.Accumulator = ""
+			return t
+		}
+
+		p.GetNextChar()
+		fmt.Println("peeked", peek)
+
+		switch {
+		case p.EOF:
+			t := tokenList["eof"]
+			t.SetLocation(start, p.GetCurrentIndex())
+			p.AddToken(t)
+			return t
+
+		case p.GetCurrentChar() == ";":
+			// // Parse the current accumulator
+			// var t token.Token
+			// if t, ok = tokenList[p.Char.Accumulator]; ok {
+			// 	t.SetLocation(start, p.GetLastIndex())
+			// } else {
+			// 	t = tokenList["ident"]
+			// 	t.SetLocation(start, p.GetLastIndex())
+			// 	t.Value.String = p.Char.Accumulator
+			// }
+			// p.AddToken(t)
 
 			// Printout an end-of-statement token
 			tt := tokenList["eos"]
@@ -174,6 +203,7 @@ func (p *Program) GetNextToken() token.Token {
 				t = tokenList["ident"]
 				t.SetLocation(start, p.GetLastIndex())
 				t.Value.String = p.Char.Accumulator
+				fmt.Println("i am here")
 			}
 			p.AddToken(t)
 

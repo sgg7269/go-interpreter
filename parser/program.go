@@ -14,7 +14,7 @@ type Program struct {
 	EOF             bool
 	Char            Char
 	Statement       Statement
-	TokenPipeline   map[string]token.Token
+	LastToken       token.Token
 	CollectedTokens []token.Token
 }
 
@@ -41,13 +41,13 @@ func (p *Program) GetProgram() {
 			}
 
 		case 2:
-			// t := p.GetNextToken()
+			t := p.GetNextToken()
 
-			// if t.ID != -3 {
-			// 	fmt.Println("wtf2")
-			// }
-			p.GetConstant()
-			p.GetEOS()
+			if t.ID != -3 {
+				fmt.Println("wtf2")
+			}
+			// p.GetConstant()
+			// p.GetEOS()
 		}
 
 		// fmt.Println(t)
